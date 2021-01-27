@@ -1,64 +1,61 @@
-<DOCTYPE HTML>
+<html>
     <head>
-        <title>my first page</title>
-        <link rel="stylesheet" href="./style.css">
+        <title>Library Application</title>
     </head>
     <body>
-        <div class="topnav">
-        <img src="http://localhost:4000/images/html5.png"width="50px" height="50px"></img>
-        <a href="http://localhost:4000/index.html">auto car</a>
-        <a href="http://localhost:4000/css.html">Lamborghini</a>
-        <a href="http://localhost:4000/bmw.html">BMW</a>
-        <a href="#">about</a>
-      </div>
         <h1>
-            welcome to css programing
+            Welcome to Library Application
         </h1>
-        <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            
-            <img src="http://localhost:4000/images/car1.jpg"></img>
-            
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car2.jpg"></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car3.jpg"></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car4.jpg" ></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car5.jpg"></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car6.jpg"></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    <div class="gallery">
-        <a href="http://localhost:4000/galry.html">
-            <img src="http://localhost:4000/images/car7.jpg"></img>
-        </a>
-        <div class="desc">Lamborghini Aventador</div>
-    </div>
-    
+        <a href="http://localhost:5000/bookForm.html">Add Book</a>
+        <table border="1" id="displaySection">
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>PubYear</th>
+                <th colspan="2">operations</th>
+            </tr>
+        </table>
+        <script>
+            fetch("http://localhost:5000/book")
+            .then((response)=>{
+                return response.json();
+            })
+            .then(data =>{
+                display(data);
+            })
+            .catch(err =>{
+                console.log("error:",err)
+            })
+
+            function display(data){displaySection
+                var elemTable=document.getElementById("displaySection")
+                for(var key in data){
+                    var tableRow='<tr>' +
+                        '<td>'+ data[key].name+'</td>'+
+                        '<td>'+ data[key].author+'</td>'+
+                        '<td>'+ data[key].genre+'</td>'+
+                        '<td>'+ data[key].pubyear+'</td>'+
+                        '<td><a href="http://localhost:5000/bookForm.html?id='+key+'">Edit</a></td>'+
+                        '<td><a href="" onclick="deleteData('+key+')">Delete</a></td>'+
+                        '</tr>'
+                    if(elemTable.innerHTML){
+                        elemTable.innerHTML+=tableRow
+                    }else{
+                        elemTable.innerHTML=tableRow
+                    }
+
+                }
+            }
+            function deleteData(objectId){
+                fetch("http://localhost:5000/book/"+objectId,{method:'DELETE'})
+                .then(response=>{
+                    return false;
+                })
+                .catch(err =>{
+                    console.log('Error:',err)
+                })
+            }
+        </script>
     </body>
-</DOCTYPE>
+</html>
